@@ -1,6 +1,5 @@
 package com.example.communications.Service;
 
-import com.example.communications.models.Communication;
 import com.example.communications.models.User;
 import com.example.communications.repositories.UserRepository;
 import org.springframework.stereotype.Service;

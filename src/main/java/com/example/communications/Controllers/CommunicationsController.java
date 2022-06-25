@@ -1,10 +1,7 @@
 package com.example.communications.Controllers;
 
-import com.example.communications.Service.ChatService;
 import com.example.communications.Service.ContactsService;
 import com.example.communications.Service.UserService;
-import com.example.communications.models.Chat;
-import com.example.communications.models.Communication;
 import com.example.communications.models.Contacts;
 import com.example.communications.models.User;
 import org.springframework.http.HttpStatus;
@@ -16,13 +13,12 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
-public class ChatController {
-    private final ChatService chatService;
+public class CommunicationsController {
     private final UserService userService;
     private final ContactsService contactsService;
 
-    public ChatController(ChatService chatService, UserService userService, ContactsService contactsService) {
-        this.chatService = chatService;
+    public CommunicationsController(UserService userService, ContactsService contactsService) {
+
         this.userService = userService;
         this.contactsService = contactsService;
     }
@@ -67,6 +63,18 @@ public class ChatController {
         return users != null && !users.isEmpty()
                 ? new ResponseEntity<>(users, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    public static class Communication {
+        List<User> users;
+
+        public List<User> getUsers() {
+            return users;
+        }
+
+        public void setUsers(List<User> users) {
+            this.users = users;
+        }
     }
 }
 
