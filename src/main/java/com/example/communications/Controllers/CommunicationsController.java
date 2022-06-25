@@ -28,7 +28,7 @@ public class CommunicationsController {
 
     @PostMapping("/communication")
     public ResponseEntity<?> create(@RequestBody Communication users) {
-
+        //Проверяю пользователей на наличие в базе данных, создаю список с пользователями из бд
         List<User> newUsers = users.getUsers()
                 .stream()
                 .map(a->{
@@ -42,6 +42,7 @@ public class CommunicationsController {
                 .collect(Collectors.toList());
 
 
+        //Создаю контакты в соответствии со списком, при этом проверяя наличие такой связи в бд
         newUsers.forEach(u->
         {
             newUsers.forEach(c-> {
@@ -55,6 +56,8 @@ public class CommunicationsController {
             });
         });
 
+
+        //Обновляю колличество контактов у ползователей после добавления новых данных
         newUsers.forEach(u->{
             int count = contactsService.getCountOfComs(u);
             if (u.getContactsCount()==null
@@ -70,6 +73,7 @@ public class CommunicationsController {
 
     @GetMapping("/communications")
     public ResponseEntity<?> getChats() {
+        //Делаю выборку пользователе, создаю класс обертку с узлами и смежными узлами
         List<User> users = userService.getUsers();
         Communication communication = null;
         if (users != null && !users.isEmpty()) {
@@ -83,7 +87,7 @@ public class CommunicationsController {
             communication.setMaxCountactsCount(maxUsers.get(0).getContactsCount());
             communication.setAvgContactsCount(userService.getAvgContactsCount());
 
-
+            //Добавляю матрицу инцедентности
             List<List<Integer>> incentenceList = new ArrayList<>();
             for (int i = 0; i < communication.getUsers().size(); i++) {
                 List<Integer> innerList = new ArrayList<>();
