@@ -1,0 +1,23 @@
+spring:
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5436/postgres
+        username: postgres
+        password: mysecretpassword
+
+
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                show_sql: true
+                format_sql: true
+                use_sql: true
+                id:
+                    new_generator_mappings: false
+                default_schema: public
+                search:
+                    autoregister_listeners: false
+                bytecode:
+                    use_reflection_optimizer: false
