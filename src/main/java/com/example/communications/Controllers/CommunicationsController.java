@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -81,7 +82,29 @@ public class CommunicationsController {
             communication.setMaxContactsUsers(maxUsers);
             communication.setMaxCountactsCount(maxUsers.get(0).getContactsCount());
             communication.setAvgContactsCount(userService.getAvgContactsCount());
+
+
+            List<List<Integer>> incentenceList = new ArrayList<>();
+            for (int i = 0; i < communication.getUsers().size(); i++) {
+                List<Integer> innerList = new ArrayList<>();
+                for (int j = 0; j < communication.getUsers().size(); j++) {
+                    Communication finalCommunication = communication;
+                    int finalJ = j;
+                    if (communication.getUsers().get(i)
+                            .getContacts()
+                            .stream().filter(c->c.getContact().equals(finalCommunication.getUsers().get(finalJ))).collect(Collectors.toList()).size()!=0) {
+                        innerList.add(1);
+                    } else {
+                        innerList.add(0);
+                    }
+                }
+                incentenceList.add(innerList);
+            }
+
+            communication.setIncentence(incentenceList);
         }
+
+
 
         return communication != null
                 ? new ResponseEntity<>(communication, HttpStatus.OK)

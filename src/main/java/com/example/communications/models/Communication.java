@@ -14,6 +14,8 @@ public class Communication {
 
     List<User> maxContactsUsers;
 
+    List<List<Integer>> incentence;
+
     int minCountactsCount;
 
     int maxCountactsCount;
