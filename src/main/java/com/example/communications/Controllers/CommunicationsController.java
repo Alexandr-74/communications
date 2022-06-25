@@ -54,6 +54,16 @@ public class CommunicationsController {
             });
         });
 
+        newUsers.forEach(u->{
+            int count = contactsService.getCountOfComs(u);
+            if (u.getContactsCount()==null
+                    || (u.getContactsCount()!=null
+                        && u.getContactsCount()!=count)) {
+                u.setContactsCount(count);
+                userService.update(u,u.getId());
+            }
+        });
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -64,6 +74,13 @@ public class CommunicationsController {
         if (users != null && !users.isEmpty()) {
             communication = new Communication();
             communication.setUsers(users);
+            List<User> minUsers = userService.getMinCountContactsUser();
+            communication.setMinContactsUsers(minUsers);
+            communication.setMinCountactsCount(minUsers.get(0).getContactsCount());
+            List<User> maxUsers = userService.getMaxContactsUser();
+            communication.setMaxContactsUsers(maxUsers);
+            communication.setMaxCountactsCount(maxUsers.get(0).getContactsCount());
+            communication.setAvgContactsCount(userService.getAvgContactsCount());
         }
 
         return communication != null

@@ -1,5 +1,6 @@
 package com.example.communications.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.Hibernate;
@@ -19,6 +20,9 @@ public class User {
 
     @Column(unique = true)
     private String userName;
+
+    @JsonIgnoreProperties(value = "contactsCount", allowSetters = true)
+    private Integer contactsCount;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
     private Set<Contacts> contacts;

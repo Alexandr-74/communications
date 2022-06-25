@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface ContactsRepository extends JpaRepository<Contacts, Long> {
     @Query("SELECT c FROM Contacts c WHERE c.contact=?1 and c.user=?2")
     Contacts getContactByAll(User contact, User user);
+    @Query("SELECT COUNT(c) FROM Contacts c WHERE c.user=?1")
+    int getCountOfComs(User user);
 }

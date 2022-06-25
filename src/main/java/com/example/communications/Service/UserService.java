@@ -17,7 +17,6 @@ public class UserService {
     public User createUser(User user) {
         return userRepository.save(user);
     }
-
     public List<User> getUsers() {
         return userRepository.findAll();
     }
@@ -25,7 +24,34 @@ public class UserService {
         return userRepository.getUserByUserName(name);
     }
 
-    public void createUsers(List<User> users) {
-        userRepository.saveAll(users);
+
+    public int getMinContactsCount() {
+        return userRepository.getMinContactsCount();
+    }
+
+    public int getMaxContactsCount() {
+        return userRepository.getMaxContactsCount();
+    }
+
+    public List<User> getMinCountContactsUser() {
+        return userRepository.getCountContactsUser(getMinContactsCount());
+    }
+
+    public List<User> getMaxContactsUser() {
+        return userRepository.getCountContactsUser(getMaxContactsCount());
+    }
+
+    public int getAvgContactsCount() {
+        return userRepository.getAvgContactsCount();
+    }
+
+    public boolean update(User user, Long id) {
+        if (userRepository.existsById(id)) {
+            user.setId(id);
+            userRepository.save(user);
+            return true;
+        }
+
+        return false;
     }
 }

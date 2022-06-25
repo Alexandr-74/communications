@@ -10,4 +10,14 @@ import java.util.List;
 public class Communication {
     List<User> users;
 
+    List<User> minContactsUsers;
+
+    List<User> maxContactsUsers;
+
+    int minCountactsCount;
+
+    int maxCountactsCount;
+
+    int avgContactsCount;
+
 }

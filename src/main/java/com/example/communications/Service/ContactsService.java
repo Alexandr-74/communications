@@ -1,6 +1,7 @@
 package com.example.communications.Service;
 
 import com.example.communications.models.Contacts;
+import com.example.communications.models.User;
 import com.example.communications.repositories.ContactsRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +19,11 @@ public class ContactsService {
         return contactsRepository.save(contacts).getId();
     }
 
-    public List<Contacts> getContacts() {
-        return contactsRepository.findAll();
-    }
-
     public Contacts getContactByAll(Contacts contact) {
         return contactsRepository.getContactByAll(contact.getContact(), contact.getUser());
+    }
+
+    public int getCountOfComs(User user) {
+        return contactsRepository.getCountOfComs(user);
     }
 }
