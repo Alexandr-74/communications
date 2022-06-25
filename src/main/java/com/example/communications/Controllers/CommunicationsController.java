@@ -2,6 +2,7 @@ package com.example.communications.Controllers;
 
 import com.example.communications.Service.ContactsService;
 import com.example.communications.Service.UserService;
+import com.example.communications.models.Communication;
 import com.example.communications.models.Contacts;
 import com.example.communications.models.User;
 import org.springframework.http.HttpStatus;
@@ -59,22 +60,15 @@ public class CommunicationsController {
     @GetMapping("/communications")
     public ResponseEntity<?> getChats() {
         List<User> users = userService.getUsers();
+        Communication communication = null;
+        if (users != null && !users.isEmpty()) {
+            communication = new Communication();
+            communication.setUsers(users);
+        }
 
-        return users != null && !users.isEmpty()
-                ? new ResponseEntity<>(users, HttpStatus.OK)
+        return communication != null
+                ? new ResponseEntity<>(communication, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    public static class Communication {
-        List<User> users;
-
-        public List<User> getUsers() {
-            return users;
-        }
-
-        public void setUsers(List<User> users) {
-            this.users = users;
-        }
     }
 }
 
